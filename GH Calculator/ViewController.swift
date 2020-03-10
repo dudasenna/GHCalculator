@@ -88,7 +88,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegat
     
     
     @IBAction func helpButtonActivate() {
-        helpPopUp()
+        //chama o alerta de ajuda
+        makeAlert(title: "Precisa de ajuda?", message: "Profissionais estão disponíveis para ajudá-lo.", buttonText: "Chamar ajuda")
     }
     
     
@@ -131,8 +132,10 @@ class ViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegat
         let periodSub = periodTextField.text!
         
         if (weightTextField.text == "" || periodTextField.text == "") {
-            errorPopUp()
+            
+            makeAlert(title: "Dados incompletos", message: "Preencha todos os campos antes de calcular.", buttonText: "OK")
             return (finalMedicineAmountMin, finalMedicineAmountMax)
+            
         }
         
         //transformar texto em Int
@@ -182,6 +185,13 @@ class ViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegat
         let weightIntra = weightTextField.text!
         let periodIntra = periodTextField.text!
         
+        if (weightTextField.text == "" || periodTextField.text == "") {
+            
+            makeAlert(title: "Dados incompletos", message: "Preencha todos os campos antes de calcular.", buttonText: "OK")
+            return (finalMedicineAmountMin, finalMedicineAmountMax)
+            
+        }
+        
         //transformar texto em Int
         let weightIntraInt = Int (weightIntra)!
         let periodIntraInt = Int (periodIntra)!
@@ -218,6 +228,9 @@ class ViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegat
         
         return (finalMedicineAmountMin, finalMedicineAmountMax)
         
+        finalMedicineAmountMin = 0.0
+        finalMedicineAmountMax = 0.0
+        
     }
     
     func divideTotalDaysBy4ui (totalDaysMin: Double, totalDaysMax: Double) -> (Double, Double) {
@@ -238,17 +251,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegat
         
     }
     
-//    func showResult (resultMin: Int, resultMax: Int) {
-//
-//        //quando calcular for apertado, aparecer o resultado calculado (quantidade de medicamentos a serem pego);
-//        //transforma em string e salva na label
-//        let resultMinString = String (resultMin)
-//        let resultMaxString = String (resultMax)
-//        let finalResult = "De " + resultMinString + " a " + resultMaxString
-//        resultLabel.text = finalResult
-//
-//    }
-    
     
     func makeAlert (title: String, message:String, buttonText: String) {
         
@@ -264,24 +266,21 @@ class ViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegat
     func resultPopUp (resultMin: Int, resultMax: Int) {
         
         //mudar a palavra medicamento
-        makeAlert(title: "Você deve retirar de \n \(resultMin) a \(resultMax) \n medicamentos", message: "", buttonText: "Finalizar")
         
+        let alert = UIAlertController(title: "Você deve retirar de \n \(resultMin) a \(resultMax) \n medicamentos", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: NSLocalizedString("Finalizar", comment: "Default action"), style: .cancel, handler: {(action : UIAlertAction ) in
+            //reinicializa todos os campos (tanto text fields quanto segmented controls)
+            self.periodTextField.text = nil
+            self.weightTextField.text = nil
+            self.injectionTypeSegmentedControl.selectedSegmentIndex = 0
+            self.medicineTypeSegmentedControl.selectedSegmentIndex = 0
+        } )
+        action.setValue(UIColor(red: CGFloat(6)/255, green: CGFloat(203)/255, blue: CGFloat(179)/255, alpha: 1), forKey: "titleTextColor")
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
         
     }
     
-    func errorPopUp () {
-        
-        //aparecer pop up de erro (algum campo vazio)
-        makeAlert(title: "Dados incompletos", message: "Preencha todos os campos antes de calcular.", buttonText: "OK")
-        
-    }
-    
-    func helpPopUp () {
-        
-        //aparecer pop up de ajuda (terá dois botões que vao levar a um pop up de confirmação)
-        makeAlert(title: "Precisa de ajuda?", message: "Profissionais estão disponíveis para ajudá-lo.", buttonText: "Chamar ajuda")
-        
-    }
     
     func restart () {
         
@@ -300,9 +299,9 @@ class ViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegat
         view.addGestureRecognizer(tap)
         
         
-        var typeOfMedicine: Medicine
-        typeOfMedicine = Medicine(injectionParameter: "Sub", typeUIParameter: 4)
-               
+//        var typeOfMedicine: Medicine
+//        typeOfMedicine = Medicine(injection: "Sub", typeUI: 4)
+//
         var paciente: Patient
         paciente = Patient(weightParameter: 45, periodParameter: 30)
         
@@ -310,27 +309,19 @@ class ViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegat
     
 }
 
-class Medicine {
-    ///Possible values: "Sub", "Intra"
-    var injection: String
-    ///Possible values: 4, 12
-    var typeUI: Int
-    
-    init(injectionParameter: String, typeUIParameter: Int) {
-        injection = injectionParameter
-        typeUI = typeUIParameter
-    }
-    
-}
-
-class Patient {
-    
-    var weight: Int
-    var period: Int
-    
-    init(weightParameter: Int, periodParameter: Int) {
-        weight = weightParameter
-        period = periodParameter
-    }
-    
-}
+//class Medicine {
+//    ///Possible values: "Sub", "Intra"
+//    var injection: String
+//    ///Possible values: 4, 12
+//    var typeUI: Int
+//
+//    init(injection: String, typeUI: Int) {
+//        self.injection = injection
+//        self.typeUI = typeUI
+//    }
+//
+//    func whichCalculation() -> Int {
+//        let
+//    }
+//
+//}
