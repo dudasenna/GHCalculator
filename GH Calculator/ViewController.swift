@@ -8,7 +8,46 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegate {
+class ViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if row == 0 {
+            return "Subcutânea"
+        }
+        else {
+            return "Intramuscular"
+        }
+    }
+
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return 2
+    }
+    
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        periodTextField.delegate = self
+        weightTextField.delegate = self
+        
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
+        
+//        typeOfInjectionPicker.dataSource = self
+//        typeOfInjectionPicker.delegate = self
+        
+        
+//        var typeOfMedicine: Medicine
+//        typeOfMedicine = Medicine(injection: "Sub", typeUI: 4)
+//
+        var paciente: Patient
+        paciente = Patient(weightParameter: 45, periodParameter: 30)
+        
+    }
+
     
     var subBool = true
     var intraBool = false
@@ -26,6 +65,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegat
     
     @IBOutlet var injectionTypeSegmentedControl: UISegmentedControl!
     
+//    @IBOutlet var typeOfInjectionPicker: UIPickerView!
+    
     @IBOutlet var medicineTypeSegmentedControl: UISegmentedControl!
     
     
@@ -37,30 +78,27 @@ class ViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegat
         return true
 
     }
-    
-//adicionar um reconhecedor de gesto para poder clicar fora para sair do teclado
-    
 
      @IBAction func injectionTypeChanged() {
-        
+
         switch injectionTypeSegmentedControl.selectedSegmentIndex {
-            
+
         case 0:
-            
+
             subBool = true
             intraBool = false
-            
+
         case 1:
-            
+
             subBool = false
             intraBool = true
-            
+
         default:
-            
+
             break
-            
+
         }
-        
+
     }
     
     @IBAction func medicineTypeChanged() {
@@ -272,7 +310,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegat
             //reinicializa todos os campos (tanto text fields quanto segmented controls)
             self.periodTextField.text = nil
             self.weightTextField.text = nil
-            self.injectionTypeSegmentedControl.selectedSegmentIndex = 0
+//            self.injectionTypeSegmentedControl.selectedSegmentIndex = 0
             self.medicineTypeSegmentedControl.selectedSegmentIndex = 0
         } )
         action.setValue(UIColor(red: CGFloat(6)/255, green: CGFloat(203)/255, blue: CGFloat(179)/255, alpha: 1), forKey: "titleTextColor")
@@ -288,25 +326,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegat
         makeAlert(title: "Tem certeza que deseja limpar?", message: "", buttonText: "Reiniciar")
         
     }
-    
-    override func viewDidLoad() {
         
-        super.viewDidLoad()
-        periodTextField.delegate = self
-        weightTextField.delegate = self
-        
-        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
-        view.addGestureRecognizer(tap)
-        
-        
-//        var typeOfMedicine: Medicine
-//        typeOfMedicine = Medicine(injection: "Sub", typeUI: 4)
-//
-        var paciente: Patient
-        paciente = Patient(weightParameter: 45, periodParameter: 30)
-        
-    }
-    
 }
 
 //class Medicine {

@@ -93,30 +93,30 @@
                                     <action selector="medicineTypeChanged" destination="BYZ-38-t0r" eventType="valueChanged" id="UV6-Rh-0tY"/>
                                 </connections>
                             </segmentedControl>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Nwl-HU-00C">
-                                <rect key="frame" x="76" y="249" width="263" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="Subcutânea"/>
-                                    <segment title="Intramuscular"/>
-                                </segments>
-                                <connections>
-                                    <action selector="injectionTypeChanged" destination="BYZ-38-t0r" eventType="valueChanged" id="uhU-CT-efz"/>
-                                </connections>
-                            </segmentedControl>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3S5-Da-NBp">
                                 <rect key="frame" x="58" y="642" width="295" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="DI7-Be-Esn">
+                                <rect key="frame" x="93" y="241" width="224" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Intramuscular"/>
+                                    <segment title="Subcutânea"/>
+                                </segments>
+                                <connections>
+                                    <action selector="injectionTypeChanged" destination="BYZ-38-t0r" eventType="valueChanged" id="SpR-tc-oQO"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="1aF-Vu-iKK"/>
                     <connections>
-                        <outlet property="injectionTypeSegmentedControl" destination="Nwl-HU-00C" id="kik-u4-eLn"/>
+                        <outlet property="injectionTypeSegmentedControl" destination="DI7-Be-Esn" id="rry-W1-PPi"/>
                         <outlet property="medicineTypeSegmentedControl" destination="Nqh-Jr-VZk" id="QQ6-82-QUL"/>
                         <outlet property="periodTextField" destination="3S5-Da-NBp" id="9KI-Du-Aew"/>
                         <outlet property="weightTextField" destination="ijZ-fH-Guf" id="PAR-Ns-uJG"/>
