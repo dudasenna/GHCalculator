@@ -27,6 +27,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegat
         return 2
     }
     
+    
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -35,6 +37,18 @@ class ViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegat
         
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
+        
+        periodTextField.addDoneButtonToKeyboard(myAction: #selector(self.periodTextField.resignFirstResponder))
+        
+        weightTextField.addDoneButtonToKeyboard(myAction: #selector(self.weightTextField.resignFirstResponder))
+        
+        periodTextField.borderStyle = UITextField.BorderStyle.roundedRect
+        weightTextField.borderStyle = UITextField.BorderStyle.roundedRect
+        
+    UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.gray], for: .normal)
+        
+    UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.darkGray], for: .selected)
+
         
 //        typeOfInjectionPicker.dataSource = self
 //        typeOfInjectionPicker.delegate = self
@@ -78,6 +92,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegat
         return true
 
     }
+    
 
      @IBAction func injectionTypeChanged() {
 
@@ -345,3 +360,25 @@ class ViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegat
 //    }
 //
 //}
+
+//função que vai criar o botão de ok no teclado
+extension UITextField{
+    
+    func addDoneButtonToKeyboard(myAction:Selector?){
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 300, height: 40))
+        doneToolbar.barStyle = UIBarStyle.default
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: "OK", style: UIBarButtonItem.Style.done, target: self, action: myAction)
+        
+        
+        var items = [UIBarButtonItem]()
+        items.append(flexSpace)
+        items.append(done)
+        
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        self.inputAccessoryView = doneToolbar
+    }
+}
