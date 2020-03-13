@@ -10,6 +10,65 @@ import UIKit
 
 class ViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
+    var subBool = true
+    var intraBool = false
+    
+    var bool4ui = true
+    var bool12ui = false
+    
+    var finalMedicineAmountMin = 0.0
+    var finalMedicineAmountMax = 0.0
+    
+    
+    @IBOutlet var helpButton: UIButton!
+    
+    @IBOutlet var periodTextField: UITextField!
+    
+    @IBOutlet var weightTextField: UITextField!
+    
+    @IBOutlet var injectionTypeSegmentedControl: UISegmentedControl!
+    
+//    @IBOutlet var typeOfInjectionPicker: UIPickerView!
+    
+    @IBOutlet var medicineTypeSegmentedControl: UISegmentedControl!
+    
+    
+    override func viewDidLoad() {
+        
+        super.viewDidLoad()
+        periodTextField.delegate = self
+        weightTextField.delegate = self
+        
+        let tapKeyboard = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tapKeyboard)
+        
+        periodTextField.addDoneButtonToKeyboard(myAction: #selector(self.periodTextField.resignFirstResponder))
+        
+        weightTextField.addDoneButtonToKeyboard(myAction: #selector(self.weightTextField.resignFirstResponder))
+        
+        periodTextField.borderStyle = UITextField.BorderStyle.roundedRect
+        weightTextField.borderStyle = UITextField.BorderStyle.roundedRect
+        
+        UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.gray], for: .normal)
+        
+        UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.darkGray], for: .selected)
+        
+        UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Avenir", size: 14)!], for: .normal)
+        UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Avenir", size: 17)!], for: .selected)
+
+        
+//        typeOfInjectionPicker.dataSource = self
+//        typeOfInjectionPicker.delegate = self
+        
+        
+//        var typeOfMedicine: Medicine
+//        typeOfMedicine = Medicine(injection: "Sub", typeUI: 4)
+//
+//        var paciente: Patient
+//        paciente = Patient(weightParameter: 45, periodParameter: 30)
+        
+    }
+    
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if row == 0 {
             return "Subcutânea"
@@ -26,62 +85,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegat
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return 2
     }
-    
-    
-    
-    override func viewDidLoad() {
-        
-        super.viewDidLoad()
-        periodTextField.delegate = self
-        weightTextField.delegate = self
-        
-        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
-        view.addGestureRecognizer(tap)
-        
-        periodTextField.addDoneButtonToKeyboard(myAction: #selector(self.periodTextField.resignFirstResponder))
-        
-        weightTextField.addDoneButtonToKeyboard(myAction: #selector(self.weightTextField.resignFirstResponder))
-        
-        periodTextField.borderStyle = UITextField.BorderStyle.roundedRect
-        weightTextField.borderStyle = UITextField.BorderStyle.roundedRect
-        
-    UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.gray], for: .normal)
-        
-    UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.darkGray], for: .selected)
-
-        
-//        typeOfInjectionPicker.dataSource = self
-//        typeOfInjectionPicker.delegate = self
-        
-        
-//        var typeOfMedicine: Medicine
-//        typeOfMedicine = Medicine(injection: "Sub", typeUI: 4)
-//
-        var paciente: Patient
-        paciente = Patient(weightParameter: 45, periodParameter: 30)
-        
-    }
-
-    
-    var subBool = true
-    var intraBool = false
-    
-    var bool4ui = true
-    var bool12ui = false
-    
-    var finalMedicineAmountMin = 0.0
-    var finalMedicineAmountMax = 0.0
-    
-    
-    @IBOutlet var periodTextField: UITextField!
-    
-    @IBOutlet var weightTextField: UITextField!
-    
-    @IBOutlet var injectionTypeSegmentedControl: UISegmentedControl!
-    
-//    @IBOutlet var typeOfInjectionPicker: UIPickerView!
-    
-    @IBOutlet var medicineTypeSegmentedControl: UISegmentedControl!
     
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -141,8 +144,10 @@ class ViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegat
     
     
     @IBAction func helpButtonActivate() {
+        
         //chama o alerta de ajuda
         makeAlert(title: "Precisa de ajuda?", message: "Profissionais estão disponíveis para ajudá-lo.", buttonText: "Chamar ajuda")
+            
     }
     
     
@@ -311,7 +316,12 @@ class ViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegat
         let action = UIAlertAction(title: NSLocalizedString(buttonText, comment: "Default action"), style: .cancel, handler: { _ in NSLog("The \"OK\" alert occured.") } )
         action.setValue(UIColor(red: CGFloat(6)/255, green: CGFloat(203)/255, blue: CGFloat(179)/255, alpha: 1), forKey: "titleTextColor")
         alert.addAction(action)
-        self.present(alert, animated: true, completion: nil)
+        
+        self.present(alert, animated: true) {
+            
+            alert.view.superview?.subviews[0].addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissOnTapOutside)))
+            
+        }
         
     }
     
@@ -331,6 +341,12 @@ class ViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegat
         action.setValue(UIColor(red: CGFloat(6)/255, green: CGFloat(203)/255, blue: CGFloat(179)/255, alpha: 1), forKey: "titleTextColor")
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
+        
+    }
+    
+    @objc func dismissOnTapOutside(){
+        
+        self.dismiss(animated: true, completion: nil)
         
     }
     
