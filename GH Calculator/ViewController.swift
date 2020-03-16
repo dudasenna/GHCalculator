@@ -54,7 +54,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UIScrollViewDelegat
         UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.darkGray], for: .selected)
         
         UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Avenir", size: 14)!], for: .normal)
-        eaUISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Avenir", size: 17)!], for: .selected)
+        UISegmentedControl.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Avenir", size: 17)!], for: .selected)
 
         
 //        typeOfInjectionPicker.dataSource = self
